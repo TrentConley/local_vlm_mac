@@ -1,6 +1,6 @@
-# Qwen2-VL FastAPI Server
+# Qwen2-VL Image Analysis Script
 
-This is a FastAPI server that uses the Qwen2-VL-7B-Instruct model for processing images with queries. The server is designed to work on both Mac (with MPS acceleration) and other platforms like AWS (with CUDA).
+This script uses the Qwen2-VL-7B-Instruct model to analyze images and answer questions about them. It's designed to work on both Mac (with MPS acceleration) and other platforms.
 
 ## Requirements
 
@@ -13,8 +13,8 @@ This is a FastAPI server that uses the Qwen2-VL-7B-Instruct model for processing
 
 1. Clone this repository:
 ```bash
-git clone <your-repo-url>
-cd <your-repo-directory>
+git clone https://github.com/TrentConley/local_vlm_mac.git
+cd local_vlm_mac
 ```
 
 2. Create and activate a virtual environment:
@@ -30,49 +30,44 @@ source venv/bin/activate  # On Unix/Mac
 pip install -r requirements.txt
 ```
 
+4. Set up your environment:
+   - Create a `.env` file in the root directory
+   - Add your image path:
+     ```
+     IMAGE_PATH=path/to/your/image.jpg
+     ```
+
 ## Usage
 
-1. Start the server:
+Run the script:
 ```bash
-python main.py
+python test.py
 ```
 
-The server will start on `http://localhost:8000`
+The script will:
+1. Load the Qwen2-VL model
+2. Process the image specified in your `.env` file
+3. Answer the query about the image
+4. Print the response
 
-2. API Endpoints:
-
-- POST `/process/`
-  - Parameters:
-    - `image`: Image file (multipart/form-data)
-    - `query`: Text query about the image
-  - Returns: JSON with model's response
-
-3. Example curl request:
-```bash
-curl -X POST "http://localhost:8000/process/" \
-  -H "accept: application/json" \
-  -H "Content-Type: multipart/form-data" \
-  -F "image=@path/to/your/image.jpg" \
-  -F "query=Describe this image"
-```
+To modify the query, edit the `messages` list in `test.py`.
 
 ## Platform-Specific Notes
 
 ### Mac with Apple Silicon (M1/M2)
-- The server will automatically use MPS (Metal Performance Shaders) for acceleration
+- The script will automatically use MPS (Metal Performance Shaders) for acceleration
 - Make sure you have the latest version of PyTorch installed
 
-### AWS P3 Instance
-- The server will automatically use CUDA for GPU acceleration
-- Make sure to use an AMI with CUDA and appropriate drivers installed
-- Recommended instance types: p3.2xlarge or better
+### Systems with CUDA
+- The script will automatically use CUDA for GPU acceleration
+- Make sure to have CUDA and appropriate drivers installed
 
 ## Model Information
 
-This server uses the Qwen2-VL-7B-Instruct model, which is capable of:
+This script uses the Qwen2-VL-7B-Instruct model, which is capable of:
 - Processing images of various resolutions and aspect ratios
 - Understanding and answering queries about images
 - Supporting multiple languages
 - Handling complex visual reasoning tasks
 
-For more information about the model, visit the [Qwen2-VL GitHub repository](https://github.com/QwenLM/Qwen-VL). 
+For more information about the model, visit the [Qwen2-VL GitHub repository](https://github.com/QwenLM/Qwen-VL).

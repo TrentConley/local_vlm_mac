@@ -1,6 +1,12 @@
 from transformers import Qwen2VLForConditionalGeneration, AutoTokenizer, AutoProcessor
 from qwen_vl_utils import process_vision_info
 import torch
+from PIL import Image
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv()
 
 # Load model with bfloat16 for better memory efficiency
 model = Qwen2VLForConditionalGeneration.from_pretrained(
@@ -31,15 +37,19 @@ processor = AutoProcessor.from_pretrained(
 # max_pixels = 1280*28*28
 # processor = AutoProcessor.from_pretrained("Qwen/Qwen2-VL-7B-Instruct", min_pixels=min_pixels, max_pixels=max_pixels)
 
+# Load local image
+image_path = os.getenv("IMAGE_PATH")  # Get image path from .env file
+image = Image.open(image_path)
+
 messages = [
     {
         "role": "user",
         "content": [
             {
                 "type": "image",
-                "image": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg",
+                "image": image,  # Pass the PIL Image object directly
             },
-            {"type": "text", "text": "Describe this image."},
+            {"type": "text", "text": "Who entered the reciept?"},
         ],
     }
 ]
