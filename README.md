@@ -54,9 +54,10 @@ To modify the query, edit the `messages` list in `test.py`.
 
 ## Platform-Specific Notes
 
-### Mac with Apple Silicon (M1/M2)
+### Mac with Apple Silicon (M1-M4)
 - The script will automatically use MPS (Metal Performance Shaders) for acceleration
 - Make sure you have the latest version of PyTorch installed
+- I am currently running this on a M4 Macbook Pro with 48GB of RAM. Check your memory usage with `top` or `htop` to make sure you have enough. You'll need around 23 GB of unused RAM, and ~20GB storage free.
 
 ### Systems with CUDA
 - The script will automatically use CUDA for GPU acceleration
