@@ -49,7 +49,7 @@ messages = [
                 "type": "image",
                 "image": image,  # Pass the PIL Image object directly
             },
-            {"type": "text", "text": "Who entered the reciept?"},
+            {"type": "text", "text": "How many gallons of fuel was consumed?"},
         ],
     }
 ]
